@@ -1,0 +1,17 @@
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {% if tipo == '0000' %}
+        Você quer mesmo deletar o registro básico (Registro 0000) "{{ object.nome }}" CNPJ: {{ object.cnpj }}<br/>
+    {% elif tipo == '0150' %}
+        Você quer mesmo deletar o fornecedor (Registro 0150) "{{ object.nome }}" CNPJ: {{ object.cnpj }}<br/>
+    {% elif tipo == 'C100' %}
+        Você quer mesmo deletar a nota fiscal (Registro C100) "{{ object.numero_documento }}" Valor: {{ object.valor_documento }}<br/>
+    {% elif tipo == 'C170' %}
+        Você quer mesmo deletar o item (Registro C170) "{{ object.descricao }}" Quantidade: {{ object.quantidade }} Valor: {{ object.valor_item }}<br/>
+    {% endif %}
+    <input type="submit" value="delete" />
+</form>
+
+{% endblock %}

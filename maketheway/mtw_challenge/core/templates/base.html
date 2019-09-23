@@ -1,0 +1,34 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<link href="{% static "styles/bootstrap.css" %}" rel="stylesheet">
+        <link href="{% static "styles/basic.css" %}" rel="stylesheet">
+		<title>Make The Way</title>
+	</head>
+	<body>
+        <div class="header">
+            <h3 class="text-center">Make The Way</h3>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'index' %}">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'upload_csv' %}">Upload CSV</a>
+                </li>
+            </ul>
+        </nav>
+		<div class="container">
+
+			<div class="row content">
+				{% block body %}
+				{% endblock %}
+			</div>
+		</div>
+	</body>
+</html>

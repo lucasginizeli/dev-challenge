@@ -73,7 +73,7 @@ def edit(request, tipo, pk):
     elif tipo == 'C170':
         form = RegistroC170Form(request.POST or None, instance=registro)
     else:
-        logging.error("Registro não encontrado")
+        logging.getLogger("error_logger").error("Tipo registro não encontrado")
         return redirect('index')
 
     if form.is_valid():
@@ -116,45 +116,46 @@ def upload_csv(request):
         for line in lines:
             fields = line.split("|")
             type_data = fields[1]
+            data_dict = dict()
             if type_data == '0000':
-                form = Registro0000()
-                form.data_inicial = Util.datetime_format(fields[2])
-                form.data_final = Util.datetime_format(fields[3])
-                form.nome = fields[4]
-                form.cnpj = fields[5]
-                form.save()
+                data_dict["data_inicial"] = Util.datetime_format(fields[2])
+                data_dict["data_final"] = Util.datetime_format(fields[3])
+                data_dict["nome"] = fields[4]
+                data_dict["cnpj"] = fields[5]
+                form = Registro0000Form(data_dict)
+                Util.save_form(form)
             elif type_data == '0150':
-                form = Registro0150()
-                form.cod_participante = fields[2]
-                form.nome = fields[3]
-                form.cod_pais = fields[4]
-                form.cnpj = fields[5]
-                form .save()
+                data_dict["cod_participante"] = fields[2]
+                data_dict["nome"] = fields[3]
+                data_dict["cod_pais"] = fields[4]
+                data_dict["cnpj"] = fields[5]
+                form = Registro0150Form(data_dict)
+                Util.save_form(form)
             elif type_data.upper() == 'C100':
-                form = RegistroC100()
-                form.cod_participante = fields[2]
-                form.cod_modelo = fields[3]
-                form.cod_situacao = fields[4]
-                form.serie = fields[5]
-                form.numero_documento = fields[6]
-                form.chave_nfe = fields[7]
-                form.data_documento = Util.datetime_format(fields[8])
-                form.data_entrada_saida = Util.datetime_format(fields[9])
-                form.valor_documento = Util.parse_decimal(fields[10])
-                form.save()
+                data_dict["cod_participante"] = fields[2]
+                data_dict["cod_modelo"] = fields[3]
+                data_dict["cod_situacao"] = fields[4]
+                data_dict["serie"] = fields[5]
+                data_dict["numero_documento"] = fields[6]
+                data_dict["chave_nfe"] = fields[7]
+                data_dict["data_documento"] = Util.datetime_format(fields[8])
+                data_dict["data_entrada_saida"] = Util.datetime_format(fields[9])
+                data_dict["valor_documento"] = Util.parse_decimal(fields[10])
+                form = RegistroC100Form(data_dict)
+                Util.save_form(form)
             elif type_data.upper() == 'C170':
-                form = RegistroC170()
-                form.numero_item = fields[2]
-                form.cod_item = fields[3]
-                form.descricao = fields[4]
-                form.quantidade = Util.parse_decimal(fields[5])
-                form.unidade = fields[6]
-                form.valor_item = Util.parse_decimal(fields[7])
-                form.save()
+                data_dict["numero_item"] = fields[2]
+                data_dict["cod_item"] = fields[3]
+                data_dict["descricao"] = fields[4]
+                data_dict["quantidade"] = Util.parse_decimal(fields[5])
+                data_dict["unidade"] = fields[6]
+                data_dict["valor_item"] = Util.parse_decimal(fields[7])
+                form = RegistroC170Form(data_dict)
+                Util.save_form(form)
 
     except Exception as e:
-        logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
-        messages.error(request, "Unable to upload file. " + repr(e))
+        logging.getLogger("error_logger").error("Não foi possível processar o upload " + repr(e))
+        messages.error(request, "Não foi possível processar o upload " + repr(e))
 
     return HttpResponseRedirect(reverse("upload_csv"))
 

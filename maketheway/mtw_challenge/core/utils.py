@@ -1,4 +1,5 @@
 import datetime
+import logging
 from core.models import Registro0000, RegistroC170, RegistroC100, Registro0150
 from django.shortcuts import get_object_or_404
 
@@ -27,4 +28,13 @@ class Util:
         decimal = round(float(decimal.replace(',', '.')), 2)
         return decimal
 
-
+    @staticmethod
+    def save_form(form):
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                logging.getLogger("error_logger").error(form.errors.as_json())
+        except Exception as e:
+            logging.getLogger("error_logger").error(repr(e))
+            pass

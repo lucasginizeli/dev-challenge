@@ -77,11 +77,10 @@ WSGI_APPLICATION = 'mtw_challenge.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mtw_db',
-        'USER': 'mtw_admin',
-        'PASSWORD': 'makethewaychallenge',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 

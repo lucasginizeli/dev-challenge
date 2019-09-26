@@ -1,4 +1,4 @@
-#Tecnologias:
+# Tecnologias:
 
 -Django
 
@@ -7,7 +7,7 @@
 -Docker (compose)
 
 
-#Instruções:
+# Instruções:
 Para rodar o projeto dockerizado é necessário usar o comando "docker-compose up" no diretório /maketheway (o próprio docker se encarregará de buildar as imagens)
 
 A aplicação rodará na porta 8000 então é necessário tê-la disponível.
@@ -17,7 +17,7 @@ O servidor utilizado foi o do próprio Django (não recomendado para ambientes d
 O container persistirá as informações inseridas no banco.
 
 
-#Upload arquivos CSV:
+# Upload arquivos CSV:
 O upload de arquivos CSV contempla todos os registros, inclusive mistos, utilizando o separador '|' como descrito na documentação.
 
 O upload de arquivos é feito na URI:
@@ -25,7 +25,7 @@ O upload de arquivos é feito na URI:
 - /upload_csv
 
 
-#RESTful:
+# RESTful:
 Dado que o 'tipo' é o tipo de registro (0000, 0150, C100, C170)
 O consumo de recursos da API é feito nas URIs:
 
